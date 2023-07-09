@@ -7,8 +7,6 @@ class ContactNameImput extends Component {
   };
 
   handleInputChange = event => {
-    console.log(event.currentTarget.value);
-
     this.setState({ [event.currentTarget.name]: event.currentTarget.value })
   }
 
