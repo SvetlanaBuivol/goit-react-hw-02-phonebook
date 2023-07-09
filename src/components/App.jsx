@@ -1,10 +1,10 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix';
-import ContactNameImput from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import { ContactListContainer, Phonebook, H2 } from './App.styled';
+import ContactForm from './ContactForm/ContactForm';
 
 export class App extends React.Component {
   state = {
@@ -84,12 +84,19 @@ export class App extends React.Component {
   };
 
   render() {
-    const { formSubmit, handleFilterChange, resetFilter, filterContactsByName, deleteContact, state } = this;
+    const {
+      formSubmit,
+      handleFilterChange,
+      resetFilter,
+      filterContactsByName,
+      deleteContact,
+      state,
+    } = this;
 
     return (
       <>
         <Phonebook>Phonebook</Phonebook>
-        <ContactNameImput onSubmit={formSubmit} />
+        <ContactForm onSubmit={formSubmit} />
         <ContactListContainer>
           <H2>Contacts</H2>
           <Filter
@@ -97,11 +104,14 @@ export class App extends React.Component {
             onChange={handleFilterChange}
             reset={resetFilter}
           />
-          {filterContactsByName().length ? <ContactList
-            contacts={filterContactsByName()}
-            onDeleteContact={deleteContact}
-          /> : <H2>Contact list is empty</H2>}
-          
+          {filterContactsByName().length ? (
+            <ContactList
+              contacts={filterContactsByName()}
+              onDeleteContact={deleteContact}
+            />
+          ) : (
+            <H2>Contact list is empty</H2>
+          )}
         </ContactListContainer>
       </>
     );

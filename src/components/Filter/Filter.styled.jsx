@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 
 export const Label = styled.label`
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 4px;
-margin-bottom: 16px;
- svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 16px;
+  svg {
     color: #999;
- }
+  }
 `;
 
 export const SearchInput = styled.input`
@@ -21,10 +21,8 @@ export const SearchInput = styled.input`
   transition: width 0.3s ease-in-out;
 
   :focus {
-    /* width: 200px; */
     cursor: text;
     border: none;
-    border-bottom: 1px solid #999; 
+    border-bottom: 1px solid #999;
   }
-
 `;

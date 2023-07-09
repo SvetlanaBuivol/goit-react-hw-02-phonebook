@@ -8,7 +8,6 @@ export const FormContainer = styled.form`
   margin-right: auto;
   margin-bottom: 4px;
   align-items: center;
-  /* background-color: #f2f2f2; */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
