@@ -1,8 +1,10 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
+import { Notify } from 'notiflix';
 import ContactNameImput from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import { ContactListContainer, Phonebook, H2 } from './App.styled';
 
 export class App extends React.Component {
   state = {
@@ -22,15 +24,46 @@ export class App extends React.Component {
       id: nanoid(),
     };
 
-    return this.setState(({ contacts }) => ({
+    const isExist = this.state.contacts.some(
+      contact =>
+        contact.name.toLowerCase() === name.toLowerCase() ||
+        contact.number === number
+    );
+
+    if (isExist) {
+      Notify.info(`${name} is already in contacts`, {
+        position: 'center-top',
+        info: {
+          background: '#738ddae4',
+        },
+      });
+      return;
+    }
+
+    this.setState(({ contacts }) => ({
       contacts: [...contacts, newContact],
     }));
+    Notify.success('Contact added successfully', {
+      position: 'center-top',
+      clickToClose: true,
+      success: {
+        background: '#9dbc89df',
+      },
+    });
   };
 
   deleteContact = contactId => {
-    return this.setState(prevState => ({
+    this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
+    Notify.success('Deleted', {
+      position: 'center-top',
+      clickToClose: true,
+      timeout: 1500,
+      success: {
+        background: '#9dbc89df',
+      },
+    });
   };
 
   handleFilterChange = event => {
@@ -46,17 +79,30 @@ export class App extends React.Component {
     return filteredContacts;
   };
 
+  resetFilter = () => {
+    this.setState({ filter: '' });
+  };
+
   render() {
+    const { formSubmit, handleFilterChange, resetFilter, filterContactsByName, deleteContact, state } = this;
+
     return (
       <>
-        <h1>Phonebook</h1>
-        <ContactNameImput onSubmit={this.formSubmit} />
-        <h2>Contacts</h2>
-        <Filter value={this.state.filter} onChange={this.handleFilterChange} />
-        <ContactList
-          contacts={this.filterContactsByName()}
-          onDeleteContact={this.deleteContact}
-        />
+        <Phonebook>Phonebook</Phonebook>
+        <ContactNameImput onSubmit={formSubmit} />
+        <ContactListContainer>
+          <H2>Contacts</H2>
+          <Filter
+            value={state.filter}
+            onChange={handleFilterChange}
+            reset={resetFilter}
+          />
+          {filterContactsByName().length ? <ContactList
+            contacts={filterContactsByName()}
+            onDeleteContact={deleteContact}
+          /> : <H2>Contact list is empty</H2>}
+          
+        </ContactListContainer>
       </>
     );
   }
