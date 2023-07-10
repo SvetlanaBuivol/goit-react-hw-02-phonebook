@@ -23,6 +23,7 @@ export class App extends React.Component {
       number,
       id: nanoid(),
     };
+    console.log("App  newContact", newContact)
 
     const isExist = this.state.contacts.some(
       contact =>
