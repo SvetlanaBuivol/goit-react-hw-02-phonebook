@@ -41,7 +41,7 @@ export class App extends React.Component {
     }
 
     this.setState(({ contacts }) => ({
-      contacts: [...contacts, newContact],
+      contacts: [newContact, ...contacts],
     }));
     Notify.success('Contact added successfully', {
       position: 'center-top',
